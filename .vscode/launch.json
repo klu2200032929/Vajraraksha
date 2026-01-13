@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-VajraRakshaApplication<vajraraksha>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.vajraraksha.VajraRakshaApplication",
+            "projectName": "vajraraksha",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
