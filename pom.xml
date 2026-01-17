@@ -11,6 +11,7 @@
 	<groupId>com.vajraraksha</groupId>
 	<artifactId>vajraraksha</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>VajraRaksha</name>
 	<description>Cybersecurity Awareness and Training Platform</description>
 	<properties>
