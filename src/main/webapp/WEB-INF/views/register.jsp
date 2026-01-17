@@ -21,15 +21,20 @@
                         <div style="margin-bottom: 1rem;">
                             <label>Password</label>
                             <input type="password" name="password" required placeholder="********" />
+                            <small
+                                style="color: var(--text-secondary); display: block; margin-top: -0.5rem; margin-bottom: 1rem; font-size: 0.8rem;">
+                                Min 8 chars, 1 Uppercase, 1 Number, 1 Special Char
+                            </small>
                         </div>
 
-                        <div style="margin-bottom: 1.5rem;">
-                            <label>Role</label>
-                            <select name="role">
-                                <option value="STUDENT">Student</option>
-                                <option value="INSTRUCTOR">Instructor</option>
-                            </select>
-                        </div>
+                        <c:if test="${not empty error}">
+                            <div
+                                style="background: rgba(255, 95, 86, 0.2); color: #ff5f56; padding: 0.5rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem;">
+                                ${error}
+                            </div>
+                        </c:if>
+
+                        <input type="hidden" name="role" value="STUDENT" />
 
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 

@@ -29,6 +29,10 @@
                         </sec:authorize>
                         <sec:authorize access="isAuthenticated()">
                             <a href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
+                            <a href="${pageContext.request.contextPath}/profile" style="margin-left: 1rem;"
+                                title="My Profile">
+                                <i class="fas fa-user-circle" style="font-size: 1.2rem;"></i>
+                            </a>
                             <form action="${pageContext.request.contextPath}/logout" method="post"
                                 style="display:inline;">
                                 <!-- CSRF Token Handling -->

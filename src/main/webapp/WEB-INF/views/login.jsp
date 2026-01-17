@@ -15,7 +15,7 @@
                     </c:if>
 
                     <form action="/perform_login" method="post">
-                        <label>Username</label>
+                        <label>Username or Email</label>
                         <input type="text" name="username" required placeholder="Enter username" />
 
                         <label>Password</label>

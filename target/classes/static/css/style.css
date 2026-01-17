@@ -174,3 +174,80 @@ footer {
     border-top: 1px solid var(--glass-border);
     background: #080808;
 }
+
+/* Cyber Tables */
+.cyber-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    color: var(--text-primary);
+}
+
+.cyber-table th {
+    text-align: left;
+    padding: 1rem;
+    border-bottom: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cyber-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.cyber-table tr:last-child td {
+    border-bottom: none;
+}
+
+.cyber-table tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Badges */
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-beginner {
+    background: rgba(0, 255, 136, 0.2);
+    color: #00ff88;
+    border: 1px solid #00ff88;
+}
+
+.badge-intermediate {
+    background: rgba(255, 184, 0, 0.2);
+    color: #ffb800;
+    border: 1px solid #ffb800;
+}
+
+.badge-advanced {
+    background: rgba(255, 95, 86, 0.2);
+    color: #ff5f56;
+    border: 1px solid #ff5f56;
+}
+
+/* Action Buttons */
+.btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    margin-right: 0.5rem;
+}
+
+.btn-danger {
+    background: transparent;
+    border: 1px solid #ff5f56;
+    color: #ff5f56;
+}
+
+.btn-danger:hover {
+    background: rgba(255, 95, 86, 0.1);
+    box-shadow: 0 0 10px rgba(255, 95, 86, 0.4);
+}

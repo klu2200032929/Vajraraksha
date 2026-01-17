@@ -87,13 +87,26 @@
     <script>
         // User Growth Chart
         const ctx1 = document.getElementById('userGrowthChart').getContext('2d');
+
+        // Inject Data from Backend
+        const userLabels = [
+            <c:forEach items="${chartLabels}" var="label" varStatus="loop">
+                '${label}'${!loop.last ? ',' : ''}
+            </c:forEach>
+        ];
+        const userData = [
+            <c:forEach items="${chartDataUsers}" var="data" varStatus="loop">
+                ${data}${!loop.last ? ',' : ''}
+            </c:forEach>
+        ];
+
         new Chart(ctx1, {
             type: 'line',
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                labels: userLabels,
                 datasets: [{
-                    label: 'New Registrations',
-                    data: [5, 12, 19, 25, 30, 45],
+                    label: 'Total Users',
+                    data: userData,
                     borderColor: '#06b6d4',
                     backgroundColor: 'rgba(6, 182, 212, 0.1)',
                     tension: 0.4,
@@ -103,7 +116,7 @@
             options: {
                 plugins: { legend: { labels: { color: '#94a3b8' } } },
                 scales: {
-                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' }, beginAtZero: true },
                     x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } }
                 }
             }
@@ -111,13 +124,26 @@
 
         // Lab Activity Chart
         const ctx2 = document.getElementById('labActivityChart').getContext('2d');
+
+        // Inject Data from Backend
+        const labLabels = [
+            <c:forEach items="${labActivityLabels}" var="label" varStatus="loop">
+                '${label}'${!loop.last ? ',' : ''}
+            </c:forEach>
+        ];
+        const labData = [
+            <c:forEach items="${labActivityData}" var="data" varStatus="loop">
+                ${data}${!loop.last ? ',' : ''}
+            </c:forEach>
+        ];
+
         new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: ['SQL Inj', 'XSS', 'Phishing', 'Network', 'Crypto'],
+                labels: labLabels,
                 datasets: [{
-                    label: 'Labs Completed',
-                    data: [12, 19, 3, 5, 2],
+                    label: 'Completions',
+                    data: labData,
                     backgroundColor: [
                         'rgba(217, 70, 239, 0.6)',
                         'rgba(6, 182, 212, 0.6)',
@@ -132,7 +158,7 @@
             options: {
                 plugins: { legend: { labels: { color: '#94a3b8' } } },
                 scales: {
-                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } },
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' }, beginAtZero: true },
                     x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#94a3b8' } }
                 }
             }

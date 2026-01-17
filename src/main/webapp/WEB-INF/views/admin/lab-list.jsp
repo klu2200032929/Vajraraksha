@@ -6,14 +6,14 @@
         </div>
 
         <div class="glass-panel">
-            <table class="table" style="color: #fff;">
+            <table class="cyber-table">
                 <thead>
                     <tr>
                         <th>Title</th>
                         <th>Description</th>
                         <th>Difficulty</th>
                         <th>Points</th>
-                        <th>Actions</th>
+                        <th style="text-align: center;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,16 +23,15 @@
                             <td>${lab.description}</td>
                             <td>
                                 <span
-                                    class="badge ${lab.difficulty == 'Advanced' ? 'bg-danger' : (lab.difficulty == 'Intermediate' ? 'bg-warning text-dark' : 'bg-success')}">
+                                    class="badge ${lab.difficulty == 'Advanced' ? 'badge-advanced' : (lab.difficulty == 'Intermediate' ? 'badge-intermediate' : 'badge-beginner')}">
                                     ${lab.difficulty}
                                 </span>
                             </td>
                             <td>${lab.points}</td>
-                            <td>
-                                <a href="/admin/labs/edit/${lab.id}" class="btn-cyber"
-                                    style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Edit</a>
-                                <a href="/admin/labs/delete/${lab.id}" class="btn-cyber"
-                                    style="padding: 0.25rem 0.5rem; font-size: 0.8rem; background: rgba(255, 95, 86, 0.2); border-color: #ff5f56;"
+                            <td class="action-cell">
+                                <a href="/admin/labs/edit/${lab.id}" class="btn-cyber btn-sm"
+                                    style="color: #000;">Edit</a>
+                                <a href="/admin/labs/delete/${lab.id}" class="btn-cyber btn-sm btn-danger"
                                     onclick="return confirm('Are you sure?')">Delete</a>
                             </td>
                         </tr>

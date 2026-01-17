@@ -32,7 +32,6 @@ public class SecurityConfig {
                         .requestMatchers("/admin/courses/generate").permitAll() // DEBUG: Allow this specific point
                         .requestMatchers("/admin/labs/generate").permitAll() // DEBUG: Allow standalone lab gen
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/instructor/**").hasRole("INSTRUCTOR")
                         .requestMatchers("/student/**").hasRole("STUDENT")
                         .anyRequest().authenticated())
                 .formLogin(form -> form

@@ -61,13 +61,69 @@ public class AdminController {
 
         model.addAttribute("completedLabs", totalCompletedLabs);
 
-        // Data arrays for Chart.js - Keep mock history for visual appeal, but use real
-        // total for last point
-        // Ideally, we would have a separate 'ActivityLog' collection to track dates,
-        // but this is a good approximation for now.
-        model.addAttribute("chartLabels", new String[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun" });
-        model.addAttribute("chartDataUsers", new int[] { 5, 12, 19, 25, 30, (int) users.size() });
-        model.addAttribute("chartDataLabs", new int[] { 2, 8, 15, 22, 35, (int) totalCompletedLabs });
+        // --- REAL CHART DATA ---
+
+        // 1. User Growth (Last 6 Months)
+        java.time.YearMonth currentMonth = java.time.YearMonth.now();
+        String[] chartLabels = new String[6];
+        int[] chartDataUsers = new int[6];
+
+        for (int i = 5; i >= 0; i--) {
+            java.time.YearMonth targetMonth = currentMonth.minusMonths(i);
+            chartLabels[5 - i] = targetMonth.getMonth().name().substring(0, 3);
+
+            // Count users created in or before this month (Cumulative Growth)
+            long count = users.stream()
+                    .filter(u -> u.getCreatedAt() != null
+                            && !java.time.YearMonth.from(u.getCreatedAt()).isAfter(targetMonth))
+                    .count();
+            chartDataUsers[5 - i] = (int) count;
+        }
+        model.addAttribute("chartLabels", chartLabels);
+        model.addAttribute("chartDataUsers", chartDataUsers);
+
+        // 2. Lab Activity (Top 5 Active Labs)
+        List<com.vajraraksha.model.Lab> allLabs = labRepository.findAll();
+        java.util.Map<String, Integer> labCounts = new java.util.HashMap<>();
+        java.util.Map<String, String> labNames = new java.util.HashMap<>();
+
+        // Initialize maps
+        for (com.vajraraksha.model.Lab lab : allLabs) {
+            labCounts.put(lab.getId(), 0);
+            labNames.put(lab.getId(), lab.getTitle());
+        }
+
+        // Count completions
+        for (com.vajraraksha.model.User u : users) {
+            if (u.getCompletedLabs() != null) {
+                for (String labId : u.getCompletedLabs()) {
+                    labCounts.put(labId, labCounts.getOrDefault(labId, 0) + 1);
+                }
+            }
+        }
+
+        // Sort by frequency
+        List<java.util.Map.Entry<String, Integer>> sortedLabs = new java.util.ArrayList<>(labCounts.entrySet());
+        sortedLabs.sort((a, b) -> b.getValue().compareTo(a.getValue())); // Descending
+
+        // Take top 5
+        int limit = Math.min(5, sortedLabs.size());
+        String[] labActivityLabels = new String[limit];
+        int[] labActivityData = new int[limit];
+
+        for (int i = 0; i < limit; i++) {
+            String labId = sortedLabs.get(i).getKey();
+            // Truncate name if too long
+            String name = labNames.getOrDefault(labId, "Unknown Lab");
+            if (name.length() > 15)
+                name = name.substring(0, 15) + "...";
+
+            labActivityLabels[i] = name;
+            labActivityData[i] = sortedLabs.get(i).getValue();
+        }
+
+        model.addAttribute("labActivityLabels", labActivityLabels);
+        model.addAttribute("labActivityData", labActivityData);
 
         return "admin/dashboard";
     }

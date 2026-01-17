@@ -6,12 +6,12 @@
         </div>
 
         <div class="glass-panel">
-            <table class="table" style="color: #fff;">
+            <table class="cyber-table">
                 <thead>
                     <tr>
                         <th>Title</th>
                         <th>Description</th>
-                        <th>Actions</th>
+                        <th style="text-align: center;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,17 +19,16 @@
                         <tr>
                             <td>${course.title}</td>
                             <td>${course.description}</td>
-                            <td>
+                            <td class="action-cell">
                                 <c:if test="${not empty course.id}">
                                     <a href="${pageContext.request.contextPath}/admin/courses/edit/${course.id}"
-                                        class="btn-cyber" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Edit</a>
+                                        class="btn-cyber btn-sm" style="color: #000;">Edit</a>
                                     <a href="${pageContext.request.contextPath}/admin/courses/delete/${course.id}"
-                                        class="btn-cyber"
-                                        style="padding: 0.25rem 0.5rem; font-size: 0.8rem; background: rgba(255, 95, 86, 0.2); border-color: #ff5f56;"
+                                        class="btn-cyber btn-sm btn-danger"
                                         onclick="return confirm('Are you sure?')">Delete</a>
                                 </c:if>
                                 <c:if test="${empty course.id}">
-                                    <span style="color: red; font-size: 0.8rem;">Error: No ID</span>
+                                    <span style="color: #ff5f56; font-size: 0.8rem;">Error: No ID</span>
                                 </c:if>
                             </td>
                         </tr>

@@ -34,9 +34,24 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user, @RequestParam String role) {
+    public String registerUser(@ModelAttribute User user, @RequestParam String role, Model model) {
+        // Password Validation
+        String passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+        if (!user.getPassword().matches(passwordPattern)) {
+            model.addAttribute("error",
+                    "Password must be at least 8 chars, contain one uppercase, one lowercase, one number, and one special char.");
+            model.addAttribute("user", user); // Keep filled data
+            return "register";
+        }
+
         user.setRole(Role.valueOf(role));
-        userService.registerUser(user);
+        try {
+            userService.registerUser(user);
+        } catch (Exception e) {
+            model.addAttribute("error", "Username or Email already exists.");
+            model.addAttribute("user", user);
+            return "register";
+        }
         return "redirect:/login?registered=true";
     }
 
@@ -45,9 +60,6 @@ public class AuthController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
             return "redirect:/admin/dashboard";
-        } else if (auth != null
-                && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_INSTRUCTOR"))) {
-            return "redirect:/instructor/dashboard";
         } else if (auth != null
                 && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_STUDENT"))) {
             return "redirect:/student/dashboard";

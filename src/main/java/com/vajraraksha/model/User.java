@@ -21,6 +21,10 @@ public class User {
     private String email;
     private String password;
 
+    // Security - OTP
+    private String otp;
+    private java.time.LocalDateTime otpExpiry;
+
     private Role role;
 
     // Gamification
@@ -31,4 +35,6 @@ public class User {
     private List<String> completedCourses = new ArrayList<>();
     private List<String> completedLabs = new ArrayList<>();
     private List<String> completedLessons = new ArrayList<>(); // Format: courseId_lessonIndex
+
+    private java.time.LocalDateTime createdAt = java.time.LocalDateTime.now();
 }
