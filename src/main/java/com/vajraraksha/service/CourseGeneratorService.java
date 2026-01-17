@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class CourseGeneratorService {
@@ -290,5 +289,33 @@ public class CourseGeneratorService {
                         }
                 }
                 return lab;
+        }
+
+        private List<Lesson> generateLessons(String courseTitle) {
+                List<Lesson> lessons = new ArrayList<>();
+                lessons.add(new Lesson("Introduction to " + courseTitle,
+                                "In this lesson, we will explore the fundamental concepts of " + courseTitle
+                                                + ". Understanding these basics is crucial for preventing security vulnerabilities.",
+                                videoGenerationService.getVideoForTopic("intro")));
+                lessons.add(new Lesson("Deep Dive: " + courseTitle + " Attacks",
+                                "Now we analyze how attackers exploit " + courseTitle
+                                                + " vulnerabilities. We will look at real-world examples and attack vectors.",
+                                videoGenerationService.getVideoForTopic(courseTitle)));
+                lessons.add(new Lesson("Securing against " + courseTitle,
+                                "Defense is the best offense. Learn the best practices, coding standards, and tools to secure your application against "
+                                                + courseTitle + ".",
+                                videoGenerationService.getVideoForTopic("defense")));
+                return lessons;
+        }
+
+        private void generateQuizForLesson(String courseId, int lessonIndex, Lesson lesson,
+                        List<Question> questions) {
+                Quiz quiz = new Quiz();
+                quiz.setTitle("Quiz: " + lesson.getTitle());
+                // Link to specific lesson via ID convention: CourseId_LessonIndex
+                quiz.setLessonId(courseId + "_" + lessonIndex);
+                quiz.setQuestions(questions);
+                quiz.setTotalPoints(questions.size() * 10);
+                quizRepository.save(quiz);
         }
 }

@@ -7,18 +7,15 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class QuizGeneratorService {
-
-        private final Random random = new Random();
 
         public Quiz generateQuiz(String lessonTitle, String topic) {
                 Quiz quiz = new Quiz();
                 quiz.setTitle("Quiz: " + lessonTitle);
                 quiz.setTotalPoints(20);
-                quiz.setQuestions(generateQuestions(topic, 3)); // Generate 3 questions per quiz
+                quiz.setQuestions(getUniqueQuestions(topic, 3)); // Generate 3 questions per quiz
                 return quiz;
         }
 

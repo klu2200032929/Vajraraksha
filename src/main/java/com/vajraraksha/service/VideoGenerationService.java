@@ -20,7 +20,7 @@ public class VideoGenerationService {
      * Analyzes the topic semantic context and generates (selects) a relevant video.
      * Returns a URL (YouTube Embed or direct MP4).
      */
-    public String generateVideoForTopic(String topic) {
+    public String getVideoForTopic(String topic) {
         String lowerTopic = topic.toLowerCase();
 
         // 1. Exact/High-Confidence Keyword Matching
