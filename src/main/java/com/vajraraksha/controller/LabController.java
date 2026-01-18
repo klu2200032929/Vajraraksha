@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/student/lab")
+@SuppressWarnings("null")
 public class LabController {
 
     @Autowired

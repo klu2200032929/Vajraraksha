@@ -17,6 +17,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/courses")
+@SuppressWarnings("null")
 public class CourseController {
 
     @Autowired

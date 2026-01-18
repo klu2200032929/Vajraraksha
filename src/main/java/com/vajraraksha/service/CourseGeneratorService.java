@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
+@SuppressWarnings("null")
 public class CourseGeneratorService {
 
         @Autowired

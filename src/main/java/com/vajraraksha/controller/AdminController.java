@@ -10,6 +10,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
+@SuppressWarnings("null")
 public class AdminController {
 
     @Autowired

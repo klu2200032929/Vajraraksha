@@ -3,6 +3,7 @@ package com.vajraraksha.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,6 +12,7 @@ public class EmailService {
     @Autowired(required = false)
     private JavaMailSender mailSender;
 
+    @Async
     public void sendOtp(String to, String otp) {
         String subject = "Your VajraRaksha Verification Code";
         String text = "Your One-Time Password (OTP) for verifying your profile change is: " + otp
