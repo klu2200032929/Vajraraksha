@@ -110,7 +110,18 @@
                             style="display: none;">Next Lesson <i class="fas fa-arrow-right"></i></a>
                     </c:if>
                     <c:if test="${currentLessonIndex + 1 >= course.lessons.size()}">
-                        <span id="next-lesson-btn" style="color: #27c93f; display: none;">Course Complete! 🏆</span>
+                        <c:choose>
+                            <c:when test="${isCourseFullyCompleted}">
+                                <a href="${pageContext.request.contextPath}/certificate/download/${course.id}"
+                                    class="btn-cyber" style="background: var(--accent-color); color: #000;">
+                                    <i class="fas fa-certificate"></i> Download Certificate
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <span id="next-lesson-btn" style="color: #27c93f; display: none;">Course Complete! 🏆
+                                    (Refresh to claim certificate)</span>
+                            </c:otherwise>
+                        </c:choose>
                     </c:if>
                 </div>
             </div>
@@ -343,7 +354,7 @@
                         if (nextBtn) nextBtn.style.display = 'inline-block';
 
                         if (data.includes("Success")) {
-                            alert("Congratulations! Lesson Complete. Points awarded.");
+                            alert("Congratulations! Lesson Complete. Points awarded. If this was your last lesson, refresh to download your certificate.");
                         }
                     }
                 })

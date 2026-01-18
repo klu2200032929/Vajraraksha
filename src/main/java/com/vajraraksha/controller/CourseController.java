@@ -111,8 +111,26 @@ public class CourseController {
             model.addAttribute("quizzes", quizzes);
         }
 
+        // Calculate Full Course Completion
+        boolean isCourseFullyCompleted = false;
+        if (course.getLessons() != null && !course.getLessons().isEmpty() && userDetails != null) {
+            com.vajraraksha.model.User user = userRepository.findByUsername(userDetails.getUsername()).orElse(null);
+            if (user != null && user.getCompletedLessons() != null) {
+                boolean allDone = true;
+                for (int i = 0; i < course.getLessons().size(); i++) {
+                    String key = id + "_" + i;
+                    if (!user.getCompletedLessons().contains(key)) {
+                        allDone = false;
+                        break;
+                    }
+                }
+                isCourseFullyCompleted = allDone;
+            }
+        }
+
         model.addAttribute("course", course);
         model.addAttribute("isLessonCompleted", isCompleted);
+        model.addAttribute("isCourseFullyCompleted", isCourseFullyCompleted);
         return "student/course-viewer";
     }
 
