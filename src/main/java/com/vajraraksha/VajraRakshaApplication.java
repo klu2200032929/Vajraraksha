@@ -11,8 +11,12 @@ import org.springframework.scheduling.annotation.EnableAsync;
 public class VajraRakshaApplication {
 
     public static void main(String[] args) {
-        // Triggering Rebuild
-        SpringApplication.run(VajraRakshaApplication.class, args);
+        try {
+            SpringApplication.run(VajraRakshaApplication.class, args);
+            System.out.println("Application started successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
