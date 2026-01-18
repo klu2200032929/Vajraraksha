@@ -20,49 +20,33 @@ public class VideoGenerationService {
      * Analyzes the topic semantic context and generates (selects) a relevant video.
      * Returns a URL (YouTube Embed or direct MP4).
      */
-    public String getVideoForTopic(String topic, int lessonIndex) {
+    public String getVideoForTopic(String topic) {
         String lowerTopic = topic.toLowerCase();
-        String[] options = null;
 
         // 1. Exact/High-Confidence Keyword Matching
         if (lowerTopic.contains("sql") && lowerTopic.contains("injection")) {
-            options = videoDatabase.get("sqli");
+            return selectRandom(videoDatabase.get("sqli"));
         } else if (lowerTopic.contains("xss") || lowerTopic.contains("cross-site")) {
-            options = videoDatabase.get("xss");
+            return selectRandom(videoDatabase.get("xss"));
         } else if (lowerTopic.contains("phishing")) {
-            options = videoDatabase.get("phishing");
+            return selectRandom(videoDatabase.get("phishing"));
         } else if (lowerTopic.contains("malware") || lowerTopic.contains("virus")
                 || lowerTopic.contains("ransomware")) {
-            options = videoDatabase.get("malware");
+            return selectRandom(videoDatabase.get("malware"));
         } else if (lowerTopic.contains("cryptography") || lowerTopic.contains("encryption")) {
-            options = videoDatabase.get("crypto");
+            return selectRandom(videoDatabase.get("crypto"));
         } else if (lowerTopic.contains("firewall") || lowerTopic.contains("network")) {
-            options = videoDatabase.get("network");
+            return selectRandom(videoDatabase.get("network"));
         } else if (lowerTopic.contains("cloud")) {
-            options = videoDatabase.get("cloud");
+            return selectRandom(videoDatabase.get("cloud"));
         } else if (lowerTopic.contains("password") || lowerTopic.contains("authentication")) {
-            options = videoDatabase.get("auth");
+            return selectRandom(videoDatabase.get("auth"));
         }
 
-        // 2. Deterministic Selection
-        if (options != null && options.length > 0) {
-            // If we have videos, pick the one at index.
-            // If index is out of bounds, return null (Fallback to text only)
-            if (lessonIndex < options.length) {
-                return options[lessonIndex];
-            } else {
-                return null;
-            }
-        }
-
-        // 3. Fallback for "general" or unknown topics
-        // For general, we might still want rotation if we have multiple
-        String[] general = videoDatabase.get("general");
-        if (general != null && lessonIndex < general.length) {
-            return general[lessonIndex];
-        }
-
-        return null;
+        // 2. Fallback "Generative" Selection (General Tech/Security Visualization)
+        // In a real system, this would call a Text-to-Video API.
+        // Here we return a generic, high-tech security background or intro.
+        return selectRandom(videoDatabase.get("general"));
     }
 
     private String selectRandom(String[] options) {

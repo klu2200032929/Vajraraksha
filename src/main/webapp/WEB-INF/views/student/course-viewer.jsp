@@ -34,46 +34,19 @@
             <div
                 style="width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
 
-                <!-- Hybrid Player Container or Fallback -->
+                <!-- Hybrid Player Container -->
                 <c:choose>
-                    <c:when test="${not empty currentLesson.videoUrl}">
-                        <c:choose>
-                            <c:when
-                                test="${currentLesson.videoUrl.contains('youtube') || currentLesson.videoUrl.contains('youtu.be')}">
-                                <div id="yt-player"></div>
-                            </c:when>
-                            <c:otherwise>
-                                <!-- Native Video Player for AI Generated/MP4 content -->
-                                <video id="native-player" width="100%" height="100%" controls controlsList="nodownload"
-                                    style="outline: none;">
-                                    <source src="${currentLesson.videoUrl}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                            </c:otherwise>
-                        </c:choose>
+                    <c:when
+                        test="${currentLesson.videoUrl.contains('youtube') || currentLesson.videoUrl.contains('youtu.be')}">
+                        <div id="yt-player"></div>
                     </c:when>
                     <c:otherwise>
-                        <!-- Fallback for Missing Video -->
-                        <div class="glass-panel"
-                            style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: var(--text-secondary);">
-                            <i class="fas fa-video-slash"
-                                style="font-size: 3rem; margin-bottom: 1rem; color: #ff5f56;"></i>
-                            <h3>Video Recommendation Unavailable</h3>
-                            <p style="max-width: 600px;">
-                                We could not find a highly relevant video for this specific lesson topic at the moment.
-                                Please proceed by reading the provided text material below.
-                            </p>
-                            <p style="color: #27c93f; font-weight: bold;">
-                                <i class="fas fa-unlock"></i> Quiz Unlocked Automatically
-                            </p>
-                        </div>
-                        <script>
-                            // Auto-unlock quiz since there is no video to watch
-                            document.addEventListener('DOMContentLoaded', function () {
-                                console.log("No video content. Auto-unlocking quiz.");
-                                unlockQuiz();
-                            });
-                        </script>
+                        <!-- Native Video Player for AI Generated/MP4 content -->
+                        <video id="native-player" width="100%" height="100%" controls controlsList="nodownload"
+                            style="outline: none;">
+                            <source src="${currentLesson.videoUrl}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </c:otherwise>
                 </c:choose>
             </div>

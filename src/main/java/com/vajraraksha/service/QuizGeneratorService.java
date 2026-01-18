@@ -83,20 +83,6 @@ public class QuizGeneratorService {
                                         List.of("Ignores the rest of the query", "Executes the query twice",
                                                         "Deletes the table", "Nothing"),
                                         "Ignores the rest of the query"));
-                        bank.add(new Question("Which of the following is an example of an Error-Based SQLi?",
-                                        List.of("Injecting a quote to see a syntax error", "Time delays",
-                                                        "Normal behavior", "None"),
-                                        "Injecting a quote to see a syntax error"));
-                        bank.add(new Question("Can SQL Injection occur in INSERT statements?",
-                                        List.of("Yes", "No", "Only in SELECT", "Only in UPDATE"),
-                                        "Yes"));
-                        bank.add(new Question("What is the primary defense against SQL Injection in Java?",
-                                        List.of("PreparedStatement", "Statement", "String Concatenation", "None"),
-                                        "PreparedStatement"));
-                        bank.add(new Question("Is it safe to use user input directly in 'ORDER BY' clauses?",
-                                        List.of("No, it can lead to injection", "Yes, always safe", "Only for numbers",
-                                                        "None"),
-                                        "No, it can lead to injection"));
                 } else if (topic.contains("xss")) {
                         bank.add(new Question("What does XSS stand for?",
                                         List.of("Cross-Site Scripting", "Extra Secure Sockets", "XML Site Styling",
@@ -133,20 +119,6 @@ public class QuizGeneratorService {
                                         "No, output encoding is also needed"));
                         bank.add(new Question("Which javascript function is dangerous and can lead to XSS if misused?",
                                         List.of("eval()", "alert()", "console.log()", "Math.random()"), "eval()"));
-                        bank.add(new Question("What does 'HttpOnly' flag on cookies prevent?",
-                                        List.of("Accessing cookies via JavaScript", "Sending cookies over HTTP",
-                                                        "Deleting cookies", "None"),
-                                        "Accessing cookies via JavaScript"));
-                        bank.add(new Question("Which encoding is best for neutralizing XSS in HTML body?",
-                                        List.of("HTML Entity Encoding", "URL Encoding", "Base64", "None"),
-                                        "HTML Entity Encoding"));
-                        bank.add(new Question("Can XSS be used to deface a website?",
-                                        List.of("Yes", "No", "Only SQL injection can", "Only if root"),
-                                        "Yes"));
-                        bank.add(new Question("What is Self-XSS?",
-                                        List.of("Social engineering user to run code on themselves",
-                                                        "Server hacking itself", "None", "Virus"),
-                                        "Social engineering user to run code on themselves"));
                 } else if (topic.contains("phishing")) {
                         bank.add(new Question("What is Phishing?",
                                         List.of("Deceptive attempt to get sensitive info", "Fishing for data in a lake",
@@ -179,21 +151,6 @@ public class QuizGeneratorService {
                         bank.add(new Question("What is 'Smishing'?",
                                         List.of("SMS Phishing", "Smart Phishing", "Small Phishing", "None"),
                                         "SMS Phishing"));
-                        bank.add(new Question("Which of the following creates a sense of trust in phishing?",
-                                        List.of("Spoofing a known brand or authority", "Bad grammar", "Threats",
-                                                        "None"),
-                                        "Spoofing a known brand or authority"));
-                        bank.add(new Question("What is 'Clone Phishing'?",
-                                        List.of("Resending a legit email with malicious link", "Cloning a person",
-                                                        "None", "Cloning a card"),
-                                        "Resending a legit email with malicious link"));
-                        bank.add(new Question("Why do phishers use URL shorteners?",
-                                        List.of("To hide the actual destination URL", "To save space", "To look cool",
-                                                        "None"),
-                                        "To hide the actual destination URL"));
-                        bank.add(new Question("What is the best technical control for email phishing?",
-                                        List.of("SPF, DKIM, and DMARC", "Firewall", "Antivirus only", "None"),
-                                        "SPF, DKIM, and DMARC"));
                 } else {
                         // General Security Questions
                         bank.add(new Question("confidentiality, integrity, and availability are known as?",
