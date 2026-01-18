@@ -297,15 +297,15 @@ public class CourseGeneratorService {
                 lessons.add(new Lesson("Introduction to " + courseTitle,
                                 "In this lesson, we will explore the fundamental concepts of " + courseTitle
                                                 + ". Understanding these basics is crucial for preventing security vulnerabilities.",
-                                videoGenerationService.getVideoForTopic("intro")));
+                                videoGenerationService.getVideoForTopic("intro", 0))); // General Video 1
                 lessons.add(new Lesson("Deep Dive: " + courseTitle + " Attacks",
                                 "Now we analyze how attackers exploit " + courseTitle
                                                 + " vulnerabilities. We will look at real-world examples and attack vectors.",
-                                videoGenerationService.getVideoForTopic(courseTitle)));
+                                videoGenerationService.getVideoForTopic(courseTitle, 0))); // Specific Video 1
                 lessons.add(new Lesson("Securing against " + courseTitle,
                                 "Defense is the best offense. Learn the best practices, coding standards, and tools to secure your application against "
                                                 + courseTitle + ".",
-                                videoGenerationService.getVideoForTopic("defense")));
+                                videoGenerationService.getVideoForTopic("defense", 1))); // General Video 2 (Defense)
                 return lessons;
         }
 

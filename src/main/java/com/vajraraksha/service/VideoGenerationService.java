@@ -20,33 +20,49 @@ public class VideoGenerationService {
      * Analyzes the topic semantic context and generates (selects) a relevant video.
      * Returns a URL (YouTube Embed or direct MP4).
      */
-    public String getVideoForTopic(String topic) {
+    public String getVideoForTopic(String topic, int lessonIndex) {
         String lowerTopic = topic.toLowerCase();
+        String[] options = null;
 
         // 1. Exact/High-Confidence Keyword Matching
         if (lowerTopic.contains("sql") && lowerTopic.contains("injection")) {
-            return selectRandom(videoDatabase.get("sqli"));
+            options = videoDatabase.get("sqli");
         } else if (lowerTopic.contains("xss") || lowerTopic.contains("cross-site")) {
-            return selectRandom(videoDatabase.get("xss"));
+            options = videoDatabase.get("xss");
         } else if (lowerTopic.contains("phishing")) {
-            return selectRandom(videoDatabase.get("phishing"));
+            options = videoDatabase.get("phishing");
         } else if (lowerTopic.contains("malware") || lowerTopic.contains("virus")
                 || lowerTopic.contains("ransomware")) {
-            return selectRandom(videoDatabase.get("malware"));
+            options = videoDatabase.get("malware");
         } else if (lowerTopic.contains("cryptography") || lowerTopic.contains("encryption")) {
-            return selectRandom(videoDatabase.get("crypto"));
+            options = videoDatabase.get("crypto");
         } else if (lowerTopic.contains("firewall") || lowerTopic.contains("network")) {
-            return selectRandom(videoDatabase.get("network"));
+            options = videoDatabase.get("network");
         } else if (lowerTopic.contains("cloud")) {
-            return selectRandom(videoDatabase.get("cloud"));
+            options = videoDatabase.get("cloud");
         } else if (lowerTopic.contains("password") || lowerTopic.contains("authentication")) {
-            return selectRandom(videoDatabase.get("auth"));
+            options = videoDatabase.get("auth");
         }
 
-        // 2. Fallback "Generative" Selection (General Tech/Security Visualization)
-        // In a real system, this would call a Text-to-Video API.
-        // Here we return a generic, high-tech security background or intro.
-        return selectRandom(videoDatabase.get("general"));
+        // 2. Deterministic Selection
+        if (options != null && options.length > 0) {
+            // If we have videos, pick the one at index.
+            // If index is out of bounds, return null (Fallback to text only)
+            if (lessonIndex < options.length) {
+                return options[lessonIndex];
+            } else {
+                return null;
+            }
+        }
+
+        // 3. Fallback for "general" or unknown topics
+        // For general, we might still want rotation if we have multiple
+        String[] general = videoDatabase.get("general");
+        if (general != null && lessonIndex < general.length) {
+            return general[lessonIndex];
+        }
+
+        return null;
     }
 
     private String selectRandom(String[] options) {
@@ -57,56 +73,51 @@ public class VideoGenerationService {
 
     private void initializeDatabase() {
         videoDatabase.put("sqli", new String[] {
-                "https://www.youtube.com/embed/ciNHn38EyRc", // SQLi Explained
-                "https://www.youtube.com/embed/_jKylhJtPmI", // Finding SQLi
-                "https://www.youtube.com/embed/2Fp9B-3t6lQ" // Advanced SQLi
+                "https://www.youtube.com/embed/8XVHftQskxk", // SQL Injection Explained
+                "https://www.youtube.com/embed/wcaiKgQU6VE", // SQL Injection in 5 Minutes
         });
 
         videoDatabase.put("xss", new String[] {
-                "https://www.youtube.com/embed/EoaDgUgS6QA", // XSS Basics
-                "https://www.youtube.com/embed/ns1LX6mEJfM", // Reflected vs Stored
-                "https://www.youtube.com/embed/Mh7d8u_3GFE" // Bypassing XSS Filters
+                "https://www.youtube.com/embed/EoaDgUgS6QA", // XSS in 100 seconds
+                "https://www.youtube.com/embed/z4LhLJnmoZ0", // XSS Explained
         });
 
         videoDatabase.put("phishing", new String[] {
-                "https://www.youtube.com/embed/XBkzBrXll0A", // Phishing Analysis
-                "https://www.youtube.com/embed/F7pYpn9NESI", // Social Engineering
-                "https://www.youtube.com/embed/p1i4eK77F5M" // Spear Phishing
+                "https://www.youtube.com/embed/XBkzBrXlle0", // Phishing Explained
+                "https://www.youtube.com/embed/Y7zNlEMDmI4", // Phishing Attacks
         });
 
         videoDatabase.put("malware", new String[] {
-                "https://www.youtube.com/embed/n8kyX_wQdZs", // Malware Intro
-                "https://www.youtube.com/embed/fTGTnrgjuGA", // Malware Analysis
-                "https://www.youtube.com/embed/4gR562GW7TI" // Ransomware
+                "https://www.youtube.com/embed/VJFaO2-zsCU", // Malware Explained
+                "https://www.youtube.com/embed/mqzP7gJDM2s", // Malware Analysis
         });
 
         videoDatabase.put("crypto", new String[] {
-                "https://www.youtube.com/embed/ERp8420ucGs", // Encryption 101
-                "https://www.youtube.com/embed/2BldESGZKB8", // Hashing
-                "https://www.youtube.com/embed/GSIDS_lvRv4" // Public Key Infrastructure
+                "https://www.youtube.com/embed/jhXCTbFnK8o", // Cryptography Basics
+                "https://www.youtube.com/embed/GQvu49c0ZZc", // Encryption Explained
         });
 
         videoDatabase.put("network", new String[] {
-                "https://www.youtube.com/embed/3u7_8qM0tgo", // OSI Model
-                "https://www.youtube.com/embed/HkZ8OW1X6Qk", // Nmap
-                "https://www.youtube.com/embed/TkCSr30UojM" // Wireshark
+                "https://www.youtube.com/embed/ALbScLraREg", // Network Security in 2 mins
+                "https://www.youtube.com/embed/rG02r5y2Fdo", // Network Security Basics
         });
 
         videoDatabase.put("cloud", new String[] {
-                "https://www.youtube.com/embed/YO_O_mXV_Yw", // Cloud Security
-                "https://www.youtube.com/embed/i_JUj8335dc" // AWS Security
+                "https://www.youtube.com/embed/F0vV9Iitf2Q", // What is Cloud Security
+                "https://www.youtube.com/embed/M9p7mH6K0oQ", // Cloud Security in 5 mins
         });
 
         videoDatabase.put("auth", new String[] {
-                "https://www.youtube.com/embed/H4Y87yP354k", // Password Hashing
-                "https://www.youtube.com/embed/15w521925rQ" // MFA
+                "https://www.youtube.com/embed/9JPnN1Z_iSY", // Authentication Explained
+                "https://www.youtube.com/embed/UBUNrFtufWo", // Session vs Token
+                "https://www.youtube.com/embed/BoyeFozmAXk" // Password Security
         });
 
         videoDatabase.put("general", new String[] {
-                // Using a tech-themed public MP4 to simulate "AI Generated" content
-                // In a real app, this would be the URL of the file created by the Gen-AI model
-                "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
-                "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+                // Cyber Security In 7 Minutes
+                "https://www.youtube.com/embed/inWWhr5tnEA",
+                // What is Cyber Security?
+                "https://www.youtube.com/embed/sdpxddDzXfE"
         });
     }
 }
