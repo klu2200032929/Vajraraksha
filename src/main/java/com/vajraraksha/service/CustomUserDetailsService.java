@@ -3,8 +3,6 @@ package com.vajraraksha.service;
 import com.vajraraksha.model.User;
 import com.vajraraksha.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +18,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    @Cacheable("users")
     public UserDetails loadUserByUsername(String identifier) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(identifier)
                 .or(() -> userRepository.findByEmail(identifier))
