@@ -23,24 +23,36 @@ public class VideoGenerationService {
     public String getVideoForTopic(String topic) {
         String lowerTopic = topic.toLowerCase();
 
-        // 1. Exact/High-Confidence Keyword Matching
-        if (lowerTopic.contains("sql") && lowerTopic.contains("injection")) {
+        // 1. Broadened Keyword Matching
+        if (lowerTopic.contains("sql") || lowerTopic.contains("database") || lowerTopic.contains("injection")) {
             return selectRandom(videoDatabase.get("sqli"));
-        } else if (lowerTopic.contains("xss") || lowerTopic.contains("cross-site")) {
+        } else if (lowerTopic.contains("xss") || lowerTopic.contains("cross-site")
+                || lowerTopic.contains("scripting")) {
             return selectRandom(videoDatabase.get("xss"));
-        } else if (lowerTopic.contains("phishing")) {
+        } else if (lowerTopic.contains("phishing") || lowerTopic.contains("email") || lowerTopic.contains("scam")
+                || lowerTopic.contains("social engineering")) {
             return selectRandom(videoDatabase.get("phishing"));
-        } else if (lowerTopic.contains("malware") || lowerTopic.contains("virus")
-                || lowerTopic.contains("ransomware")) {
+        } else if (lowerTopic.contains("malware") || lowerTopic.contains("virus") || lowerTopic.contains("ransomware")
+                || lowerTopic.contains("trojan") || lowerTopic.contains("spyware")) {
             return selectRandom(videoDatabase.get("malware"));
-        } else if (lowerTopic.contains("cryptography") || lowerTopic.contains("encryption")) {
+        } else if (lowerTopic.contains("cryptography") || lowerTopic.contains("encryption")
+                || lowerTopic.contains("hashing") || lowerTopic.contains("decryption")) {
             return selectRandom(videoDatabase.get("crypto"));
-        } else if (lowerTopic.contains("firewall") || lowerTopic.contains("network")) {
+        } else if (lowerTopic.contains("firewall") || lowerTopic.contains("network") || lowerTopic.contains("osi")
+                || lowerTopic.contains("tcp") || lowerTopic.contains("ip") || lowerTopic.contains("port")) {
             return selectRandom(videoDatabase.get("network"));
-        } else if (lowerTopic.contains("cloud")) {
+        } else if (lowerTopic.contains("cloud") || lowerTopic.contains("aws") || lowerTopic.contains("azure")
+                || lowerTopic.contains("gcp")) {
             return selectRandom(videoDatabase.get("cloud"));
-        } else if (lowerTopic.contains("password") || lowerTopic.contains("authentication")) {
+        } else if (lowerTopic.contains("password") || lowerTopic.contains("authentication")
+                || lowerTopic.contains("login") || lowerTopic.contains("identity") || lowerTopic.contains("access")) {
             return selectRandom(videoDatabase.get("auth"));
+        } else if (lowerTopic.contains("scan") || lowerTopic.contains("vulnerability") || lowerTopic.contains("recon")
+                || lowerTopic.contains("nmap")) {
+            return selectRandom(videoDatabase.get("scanning"));
+        } else if (lowerTopic.contains("iot") || lowerTopic.contains("internet of things")
+                || lowerTopic.contains("device")) {
+            return selectRandom(videoDatabase.get("iot"));
         }
 
         // 2. Fallback "Generative" Selection (General Tech/Security Visualization)
@@ -97,11 +109,23 @@ public class VideoGenerationService {
                 "https://www.youtube.com/embed/BoyeFozmAXk" // Password Security
         });
 
+        // New Categories
+        videoDatabase.put("scanning", new String[] {
+                "https://www.youtube.com/embed/HkZ8OW1X6Qk", // Nmap (Network Scanning)
+                "https://www.youtube.com/embed/4gR562GW7TI" // Vulnerability Scanning Context
+        });
+
+        videoDatabase.put("iot", new String[] {
+                "https://www.youtube.com/embed/QSIPNhOiMoE", // IoT Security Explained
+        });
+
         videoDatabase.put("general", new String[] {
-                // Cyber Security In 7 Minutes
+                // Cyber Security In 7 Minutes (Simplilearn - generally safe)
                 "https://www.youtube.com/embed/inWWhr5tnEA",
-                // What is Cyber Security?
-                "https://www.youtube.com/embed/sdpxddDzXfE"
+                // What is Cyber Security? (Konnect)
+                "https://www.youtube.com/embed/sdpxddDzXfE",
+                // IBM Technology - What is Cybersecurity? (Very Safe)
+                "https://www.youtube.com/embed/0GjsOQG9iX0"
         });
     }
 }
